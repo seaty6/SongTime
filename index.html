@@ -4,14 +4,16 @@
         <meta charset="utf-8">
         <title>SongTime</title>
     </head>
-
     <br>
     <br>
     <div>
-	View interactive Demo on <a href="https://jsfiddle.net/seaty6/rq5tkc83/">JSFiddle</a>
-	API: <a href="https://getsongBPM.com">GetSongBPM.com</a>
-	//I know the API Key is exposed - it's not really high stakes enough for it to matter. If you want one, just get it yourself from the website below.
+        --> 
+        View interactive Demo on <a href="https://jsfiddle.net/seaty6/rq5tkc83/">JSFiddle</a> <br>
+        API: <a href="https://getsongBPM.com">GetSongBPM.com</a><br><br>
+        <! --
+        I know the API Key is exposed - it's not really high stakes enough for it to matter. If you want one, just get it yourself from the website below.
         What song were you listening to?
+        --> 
         <div>
             <input type="text" class="song-title" id="input-song-title" placeholder="Song Name" />
             <input type="text" class="song-artist" id="input-song-artist" placeholder="Artist Name" />
@@ -32,35 +34,34 @@
         <p id="AnswerInput"></p>
     </div>
 </html>
-
 <script>
-	function calculate() {
-		var x = document.getElementById("BPMInput").value;
-		var y = document.getElementById("BeatsInput").value;
-		var defaultVal = x.defaultValue;
-		var currentVal = x.value;
-		document.getElementById("AnswerInput").innerHTML = "You probably counted around " + y / (x / 60) + " seconds!"
-	}
-
-	function BPMCalc() {
-		var song_title = document.getElementById("input-song-title").value;
-		var song_artist = document.getElementById("input-song-artist").value;
-		URL = decodeURI("https://api.getsongbpm.com/search/?api_key=663a6bdd568399047b3adfb955b25a1c&type=both&lookup=song:") + encodeURIComponent(song_title) + "artist:" + encodeURIComponent(song_artist)
-		//document.getElementById("BPMtesting").innerHTML = URL
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var myObj = JSON.parse(this.responseText);
-				try {
-					console.log(myObj.search[0].tempo);
-					document.getElementById("BPMInput").value = myObj.search[0].tempo
-					document.getElementById("BPMMessage").innerHTML = 'Looks like the song ' + myObj.search[0].song_title + ' by ' + myObj.search[0].artist.name + ' has a tempo of ' + myObj.search[0].tempo + ' BPM.'
-				} catch (error) {
-					document.getElementById("BPMMessage").innerHTML = 'This song is not in the GetSongBPM Database. On the todo list is to use the Spotify API to have more songs, but thats for a later day. You will either have to look up the tempo yourself or try a slightly older/more mainstream song.'
-				}
-			}
-		};
-		xmlhttp.open("GET", URL, true);
-		xmlhttp.send();
-	}
-</script> 
+    function calculate() {
+    	var x = document.getElementById("BPMInput").value;
+    	var y = document.getElementById("BeatsInput").value;
+    	var defaultVal = x.defaultValue;
+    	var currentVal = x.value;
+    	document.getElementById("AnswerInput").innerHTML = "You probably counted around " + y / (x / 60) + " seconds!"
+    }
+    
+    function BPMCalc() {
+    	var song_title = document.getElementById("input-song-title").value;
+    	var song_artist = document.getElementById("input-song-artist").value;
+    	URL = decodeURI("https://api.getsongbpm.com/search/?api_key=663a6bdd568399047b3adfb955b25a1c&type=both&lookup=song:") + encodeURIComponent(song_title) + "artist:" + encodeURIComponent(song_artist)
+    	//document.getElementById("BPMtesting").innerHTML = URL
+    	var xmlhttp = new XMLHttpRequest();
+    	xmlhttp.onreadystatechange = function() {
+    		if (this.readyState == 4 && this.status == 200) {
+    			var myObj = JSON.parse(this.responseText);
+    			try {
+    				console.log(myObj.search[0].tempo);
+    				document.getElementById("BPMInput").value = myObj.search[0].tempo
+    				document.getElementById("BPMMessage").innerHTML = 'Looks like the song ' + myObj.search[0].song_title + ' by ' + myObj.search[0].artist.name + ' has a tempo of ' + myObj.search[0].tempo + ' BPM.'
+    			} catch (error) {
+    				document.getElementById("BPMMessage").innerHTML = 'This song is not in the GetSongBPM Database. On the todo list is to use the Spotify API to have more songs, but thats for a later day. You will either have to look up the tempo yourself or try a slightly older/more mainstream song.'
+    			}
+    		}
+    	};
+    	xmlhttp.open("GET", URL, true);
+    	xmlhttp.send();
+    }
+</script>
